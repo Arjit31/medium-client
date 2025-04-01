@@ -4,10 +4,11 @@ import { Button } from "./Button";
 
 
 export function Appbar() {
-    const navigate = useNavigate();
-    const getStarted = () => {
-        navigate("/signup")
-    } 
+  const navigate = useNavigate();
+  const getStarted = () => {
+    navigate("/signup");
+  };
+
   return (
     <div className="w-full">
       <div className="bg-slate-600 py-4 px-5 flex items-center justify-between">
@@ -24,7 +25,7 @@ export function Appbar() {
           </Link>
           <div className="text-white text-lg">Write</div>
           <Link to="/signin">
-          <div className="text-white text-lg">Signin</div>
+            <div className="text-white text-lg">Signin</div>
           </Link>
           <div className="max-w-32">
             <Button text="Get Strated" clickHandler={getStarted} />
