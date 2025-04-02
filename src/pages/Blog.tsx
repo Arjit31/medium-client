@@ -2,39 +2,34 @@ import { BlogCard } from "../components/BlogCard";
 import { Appbar } from "../components/Appbar";
 import { useState, useEffect } from "react";
 import axios from "axios";
-type blogType = {
-  id: string;
-  authorId: string;
-  content: string;
-  published: boolean;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-  author: {
-    name: string;
-  };
-};
+import { blogType } from "../types/blogType";
+import { useNavigate } from "react-router-dom";
+import { Spinner } from "../components/Spinner";
 
 export function Blog() {
-  const [blogData, setBlogData] = useState<Array<blogType>>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate()
+
+  const [blogData, setBlogData] = useState<Array<blogType>>();
   useEffect(() => {
     const token: string = localStorage.getItem("Authorization") || "";
     const headers = {
       Authorization: token,
     };
     async function fetchBlocks() {
-      const res = await axios.get(
-        "https://my-app.apk20023110.workers.dev/api/v1/blog/bulk",
-        {
-          headers: headers,
-        }
-      );
-      const arr = res.data;
-      console.log(arr);
-      setBlogData(arr);
-      setLoading(false);
-      return res;
+      try {    
+        const res = await axios.get(
+          "https://my-app.apk20023110.workers.dev/api/v1/blog/bulk",
+          {
+            headers: headers,
+          }
+        );
+        const arr = res.data;
+        console.log(arr);
+        setBlogData(arr);
+        return res;
+      } catch (error) {
+        navigate('/signup')
+      }
     }
     fetchBlocks();
   }, []);
@@ -42,9 +37,9 @@ export function Blog() {
   return (
     <div className="w-full h-screen flex flex-col items-center scroll-smooth ">
       <Appbar />
-      {loading ? (
+      {!blogData ? (
         <div className="h-full flex items-center justify-center">
-          Loading...
+          <Spinner></Spinner>
         </div>
       ) : (
         <div className="w-full h-full scrollbar overflow-y-auto flex justify-center">

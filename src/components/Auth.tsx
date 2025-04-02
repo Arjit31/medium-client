@@ -1,11 +1,19 @@
 import { LabeledInput } from "./LabeledInput";
 import { data, Link, useNavigate } from "react-router-dom";
 import { Button } from "./Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SignupType, SigninType } from "@arjit31/medium-common-module";
 import axios from "axios";
+import { useAtom } from "jotai";
+import { userAtom } from "../atom";
 
 export function Auth({ type }: { type: "signin" | "signup" }) {
+  const [user, setUser] = useAtom(userAtom)
+  useEffect(() => {
+    if(user){
+      navigate("/blogs");
+    }
+  }, [user])
   const navigate = useNavigate();
   const [formData, setFormData] =
     type === "signup"
@@ -35,8 +43,9 @@ export function Auth({ type }: { type: "signin" | "signup" }) {
           formData
         );
       }
-      const token = "Bearer " + res.data;
+      const token = "Bearer " + res.data.token;
       localStorage.setItem("Authorization", token);
+      setUser(res.data.user);
       navigate("/blogs");
     } catch (error) {
         console.log(error);
