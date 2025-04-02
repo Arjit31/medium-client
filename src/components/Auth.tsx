@@ -8,24 +8,18 @@ import { useAtom } from "jotai";
 import { userAtom } from "../atom";
 
 export function Auth({ type }: { type: "signin" | "signup" }) {
-  const [user, setUser] = useAtom(userAtom)
+  const [user, setUser] = useAtom(userAtom);
   useEffect(() => {
-    if(user){
+    if (user) {
       navigate("/blogs");
     }
-  }, [user])
+  }, [user]);
   const navigate = useNavigate();
-  const [formData, setFormData] =
-    type === "signup"
-      ? useState<SignupType>({
-          name: "",
-          username: "",
-          password: "",
-        })
-      : useState<SigninType>({
-          username: "",
-          password: "",
-        });
+  const [formData, setFormData] = useState<SignupType>({
+    name: "",
+    username: "",
+    password: "",
+  });
 
   const [error, setError] = useState<string>("");
 
@@ -48,8 +42,8 @@ export function Auth({ type }: { type: "signin" | "signup" }) {
       setUser(res.data.user);
       navigate("/blogs");
     } catch (error) {
-        console.log(error);
-        setError("Wrong credentials!");
+      console.log(error);
+      setError("Wrong credentials!");
     }
   }
 
