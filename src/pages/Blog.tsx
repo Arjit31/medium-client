@@ -44,7 +44,6 @@ export function Blog() {
       ) : (
         <div className="w-full h-full scrollbar overflow-y-auto flex justify-center">
           <div className="w-5/6 h-full flex flex-col items-center p-10">
-            <div className="w-full">
               {blogData.map((value) => (
                 <BlogCard
                   key={value.id}
@@ -55,7 +54,6 @@ export function Blog() {
                   createdAt={value.updatedAt.substring(0, 10)}
                 />
               ))}
-            </div>
           </div>
         </div>
       )}

@@ -15,7 +15,7 @@ export function BlogCard({
   createdAt: string;
 }) {
   return (
-    <Link to={"/blog/" + id}>
+    <Link to={"/blog/" + id} className="w-full">
       <div className="w-full flex flex-col gap-1">
         <div className="flex items-center gap-1.5">
           <Avatar name={name} />
