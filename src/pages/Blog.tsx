@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "../components/Spinner";
 
 export function Blog() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [blogData, setBlogData] = useState<Array<blogType>>();
   useEffect(() => {
@@ -16,7 +16,7 @@ export function Blog() {
       Authorization: token,
     };
     async function fetchBlocks() {
-      try {    
+      try {
         const res = await axios.get(
           "https://my-app.apk20023110.workers.dev/api/v1/blog/bulk",
           {
@@ -28,7 +28,7 @@ export function Blog() {
         setBlogData(arr);
         return res;
       } catch (error) {
-        navigate('/signup')
+        navigate("/signup");
       }
     }
     fetchBlocks();
@@ -44,16 +44,18 @@ export function Blog() {
       ) : (
         <div className="w-full h-full scrollbar overflow-y-auto flex justify-center">
           <div className="w-5/6 h-full flex flex-col items-center p-10">
-            {blogData.map((value) => (
-              <BlogCard
-                key={value.id}
-                id={value.id}
-                name={value.author.name}
-                title={value.title}
-                content={value.content}
-                createdAt={value.updatedAt.substring(0, 10)}
-              />
-            ))}
+            <div className="w-full">
+              {blogData.map((value) => (
+                <BlogCard
+                  key={value.id}
+                  id={value.id}
+                  name={value.author.name}
+                  title={value.title}
+                  content={value.content}
+                  createdAt={value.updatedAt.substring(0, 10)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       )}
